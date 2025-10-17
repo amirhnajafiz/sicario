@@ -51,6 +51,43 @@ void prepare_rootfs_files() {
     }
 
     free(cmd);
+
+    // update the /etc/hosts, /etc/hostname, and /etc/resolv.conf files in the rootfs
+    const char *hosts_content = "127.0.0.1\tlocalhost\n"
+                                "::1\tlocalhost ip6-localhost ip6-loopback\n";
+    const char *hosts_path = ROOTFS_DIRECTORY "/etc/hosts";
+    FILE *hosts_file = fopen(hosts_path, "w");
+    if (hosts_file) {
+        fputs(hosts_content, hosts_file);
+        fclose(hosts_file);
+    } else {
+        perror("fopen hosts");
+    }
+
+    const char *hostname_content = CONTAINER "\n";
+    const char *hostname_path = ROOTFS_DIRECTORY "/etc/hostname";
+    FILE *hostname_file = fopen(hostname_path, "w");
+    if (hostname_file) {
+        fputs(hostname_content, hostname_file);
+        fclose(hostname_file);
+    } else {
+        perror("fopen hostname");
+    }
+
+    // copy the host's resolv.conf to the container's rootfs
+    const char *resolv_src = "/etc/resolv.conf";
+    const char *resolv_dst = ROOTFS_DIRECTORY "/etc/resolv.conf";
+    cmdsize = strlen(resolv_src) + strlen(resolv_dst) + 16;
+    cmd = malloc(cmdsize);
+    if (!cmd) { perror("malloc"); exit(1); }
+    
+    snprintf(cmd, cmdsize, "sudo cp %s %s", resolv_src, resolv_dst);
+    rc = system(cmd);
+    if (rc != 0) {
+        fprintf(stderr, "Failed to run command (rc=%d): %s\n", rc, cmd);
+    }
+
+    free(cmd);
 }
 
 int main() {
