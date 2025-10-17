@@ -17,7 +17,7 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 _OBJ = sicario.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-.PHONY: all clean
+.PHONY: all clean remove
 
 # default goal
 all: sicario
@@ -31,3 +31,6 @@ sicario: $(OBJ)
 
 clean:
 	rm -f $(ODIR)/*.o sicario *~ core $(IDIR)/*~
+
+remove:
+	sudo rm -rf /opt/container
