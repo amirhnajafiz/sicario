@@ -1,9 +1,0 @@
-[package]
-name="epaxos"
-version="1.83.0"
-edition = "2021"
-
-[dependencies]
-config = "0.15.11"
-dotenv = "0.15.0"
-serde = { version = "1.0", features = ["derive"] }
