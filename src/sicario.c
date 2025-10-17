@@ -4,6 +4,8 @@ void prepare_rootfs_files() {
     /* 
         Prepare container's rootfs files.
         The first step is to build the ROOTFS_DIRECTORY.
+        The second step is to extract the alpine image into the rootfs directory.
+        The third step is to update /etc/hosts, /etc/hostname, and /etc/resolv.conf files in the rootfs.
     */
     const char *path = ROOTFS_DIRECTORY;
     size_t len = strlen(path);
@@ -30,10 +32,7 @@ void prepare_rootfs_files() {
 
     // create the rootfs directory
     snprintf(cmd, cmdsize, "sudo mkdir -p %s", quoted);
-    int rc = system(cmd);
-    if (rc != 0) {
-        fprintf(stderr, "Failed to run command (rc=%d): %s\n", rc, cmd);
-    }
+    execute_command(cmd);
 
     free(cmd);
     free(quoted);
@@ -45,10 +44,7 @@ void prepare_rootfs_files() {
     if (!cmd) { perror("malloc"); exit(1); }
 
     snprintf(cmd, cmdsize, "sudo tar -xzf %s -C %s", alpine_image, ROOTFS_DIRECTORY);
-    rc = system(cmd);
-    if (rc != 0) {
-        fprintf(stderr, "Failed to run command (rc=%d): %s\n", rc, cmd);
-    }
+    execute_command(cmd);
 
     free(cmd);
 
@@ -82,10 +78,7 @@ void prepare_rootfs_files() {
     if (!cmd) { perror("malloc"); exit(1); }
     
     snprintf(cmd, cmdsize, "sudo cp %s %s", resolv_src, resolv_dst);
-    rc = system(cmd);
-    if (rc != 0) {
-        fprintf(stderr, "Failed to run command (rc=%d): %s\n", rc, cmd);
-    }
+    execute_command(cmd);
 
     free(cmd);
 }

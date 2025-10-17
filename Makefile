@@ -11,10 +11,10 @@ LIBS = -lm
 ODIR = src
 
 # build paths
-_DEPS = sicario.h
+_DEPS = sicario.h cmd.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = sicario.o
+_OBJ = sicario.o cmd.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 .PHONY: all clean remove

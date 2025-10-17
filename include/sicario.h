@@ -3,6 +3,8 @@
 #include<string.h>
 #include<stdlib.h>
 
+#include"cmd.h"
+
 #define CONTAINER "sicario-container"
 #define CONTAINER_DIRECTORY "/opt/container"
 #define ROOTFS_DIRECTORY CONTAINER_DIRECTORY "/rootfs"
