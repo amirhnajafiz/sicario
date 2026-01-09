@@ -15,6 +15,7 @@
 *.ilk
 *.map
 *.exp
+build/
 
 # Precompiled Headers
 *.gch
@@ -39,6 +40,8 @@
 *.i*86
 *.x86_64
 *.hex
+sicario
+main
 
 # Debug files
 *.dSYM/
