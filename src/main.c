@@ -67,15 +67,16 @@ int main(int argc, char **argv)
 		}
 
 		log_info(
-			"metrics\n\tread_bytes: %llu\n\twrite_bytes: %llu\n\tsyscr: %llu\n\tsyscw: %llu",
+			"metrics\n\tread_bytes: %llu\n\twrite_bytes: %llu\n\tsyscr: %llu\n\tsyscw: %llu\n\tread rate: %f b/s\n\twrite rate: %f b/s",
 			metrics->read_bytes,
 			metrics->write_bytes,
 			metrics->syscr,
-			metrics->syscw);
+			metrics->syscw,
+			metrics->read_rate,
+			metrics->write_rate);
 
-		// free resources
+		// free resources (metrics are handled by io module)
 		free(metadata);
-		free(metrics);
 
 		// wait 5 seconds
 		sleep(5);
