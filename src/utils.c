@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 // pid validation checks if pid is a valid positive number.
 bool pid_validation(char *pid_str)
@@ -68,4 +69,20 @@ void ctrim_str(char *str)
 bool has_prefix(const char *str, const char *pre)
 {
     return strncmp(pre, str, strlen(pre)) == 0;
+}
+
+// current timestamp returns timestamp as string.
+char *current_timestamp()
+{
+    time_t rawtime;
+    struct tm *timeinfo;
+
+    char *buffer = (char *)malloc(64 * sizeof(char));
+
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer, 64, "%Y-%m-%d %H:%M:%S", timeinfo); 
+    
+    return buffer;
 }

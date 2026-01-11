@@ -1,4 +1,5 @@
 #include "io.h"
+#include "logging.h"
 #include "proc.h"
 #include "utils.h"
 
@@ -11,33 +12,33 @@ int main(int argc, char **argv)
 	// check the input parameters
 	if (argc != 2)
 	{
-		fprintf(stderr, "[failed][args] must include only a PID in input args.\n");
+		log_fatal("must include only a PID in input args.");
 		exit(1);
 	}
 
 	// copy the pid from input parameters
 	char *pid_str = argv[1];
-	fprintf(stdout, "[info] target pid: %s\n", pid_str);
+	log_info("target pid: %s", pid_str);
 
 	// convert the pid to int for validation check
 	int pid = pid_from_str(pid_str);
 	if (pid < 1)
 	{
-		fprintf(stderr, "[failed][pid] pid must be a positive valid number!\n");
+		log_fatal("pid must be a positive valid number!");
 		exit(1);
 	}
 
 	// check if proc exists
 	if (!proc_exists(pid))
 	{
-		fprintf(stderr, "[failed][proc] pid does not exist or stopped!\n");
+		log_fatal("pid does not exist or stopped!");
 		exit(0);
 	}
 
 	// check if IO is exported
 	if (!proc_io_available(pid))
 	{
-		fprintf(stderr, "[failed][io] io metrics are not exported for this process.\n");
+		log_fatal("io metrics are not exported for this process.");
 		exit(0);
 	}
 
@@ -47,12 +48,12 @@ int main(int argc, char **argv)
 		proc_metadata *metadata = get_proc_metadata(pid);
 		if (metadata->err != 0)
 		{
-			fprintf(stderr, "[failed][proc] failed to get process metadata.\n");
+			log_fatal("failed to get process metadata.");
 			exit(1);
 		}
 
-		fprintf(stdout, 
-			"[metric] pid: %d\n[metric] command: %s\n[metric] status: %s\n",
+		log_info(
+			"metadata\n\tpid: %d\n\tcommand: %s\n\tstatus: %s",
 			metadata->pid, 
 			metadata->procname, 
 			metadata->state
@@ -62,12 +63,12 @@ int main(int argc, char **argv)
 		io_metrics *metrics = get_io_metrics(pid);
 		if (metrics->err != 0)
 		{
-			fprintf(stderr, "[failed][io] failed to get process io metrics.\n");
+			log_fatal("failed to get process io metrics.");
 			exit(1);
 		}
 
-		fprintf(stdout, 
-			"[metric] read_bytes: %llu\n[metric] write_bytes: %llu\n[metric] syscr: %llu\n[metric] syscw: %llu\n",
+		log_info(
+			"metrics\n\tread_bytes: %llu\n\twrite_bytes: %llu\n\tsyscr: %llu\n\tsyscw: %llu",
 			metrics->read_bytes,
 			metrics->write_bytes,
 			metrics->syscr,

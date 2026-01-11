@@ -9,7 +9,8 @@
 
 // refer to src/utils.c
 int pid_from_str(char *pid_str);
-void ctrim_str(char *str);
 bool has_prefix(const char *str, const char *pre);
+void ctrim_str(char *str);
+char *current_timestamp();
 
 #endif
