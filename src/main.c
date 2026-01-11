@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> // for exit() function
+#include <unistd.h> // for sleep() function
 
 int main(int argc, char **argv)
 {
@@ -39,15 +40,21 @@ int main(int argc, char **argv)
 		exit(0);
 	}
 
-	// get proc metadata
-	proc_metadata *metadata = get_proc_metadata(pid);
-	if (metadata->err != 0)
+	while (true)
 	{
-		fprintf(stderr, "[failed][proc] failed to get process metadata.\n");
-		exit(1);
-	}
+		// get proc metadata
+		proc_metadata *metadata = get_proc_metadata(pid);
+		if (metadata->err != 0)
+		{
+			fprintf(stderr, "[failed][proc] failed to get process metadata.\n");
+			exit(1);
+		}
 
-	fprintf(stdout, "PID: %d\nProc: %s\nStatus: %s\n", metadata->pid, metadata->procname, metadata->state);
+		fprintf(stdout, "[metric] pid: %d\n[metric] command: %s\n[metric] status: %s\n", metadata->pid, metadata->procname, metadata->state);
+
+		// wait 5 seconds
+		sleep(5);
+	}
 
 	return 0;
 }

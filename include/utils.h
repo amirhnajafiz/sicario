@@ -7,5 +7,6 @@
 
 // refer to src/utils.c
 int pid_from_str(char *pid_str);
+void ctrim_str(char *str);
 
 #endif

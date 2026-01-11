@@ -1,4 +1,5 @@
 #include "proc.h"
+#include "utils.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -67,6 +68,7 @@ proc_metadata *get_proc_metadata(int pid)
         if (index == 2)
         {
             strcpy(metadata->procname, token);
+            ctrim_str(metadata->procname);
         }
         if (index == 3)
         {
