@@ -35,9 +35,19 @@ int main(int argc, char **argv)
 	// check if IO is exported
 	if (!proc_io_available(pid))
 	{
-		fprintf(stderr, "[failed][io] io metrics are not exported for this process.");
+		fprintf(stderr, "[failed][io] io metrics are not exported for this process.\n");
 		exit(0);
 	}
+
+	// get proc metadata
+	proc_metadata *metadata = get_proc_metadata(pid);
+	if (metadata->err != 0)
+	{
+		fprintf(stderr, "[failed][proc] failed to get process metadata.\n");
+		exit(1);
+	}
+
+	fprintf(stdout, "PID: %d\nProc: %s\nStatus: %s\n", metadata->pid, metadata->procname, metadata->state);
 
 	return 0;
 }
