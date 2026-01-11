@@ -1,3 +1,4 @@
+#include "io.h"
 #include "proc.h"
 #include "utils.h"
 
@@ -50,7 +51,32 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 
-		fprintf(stdout, "[metric] pid: %d\n[metric] command: %s\n[metric] status: %s\n", metadata->pid, metadata->procname, metadata->state);
+		fprintf(stdout, 
+			"[metric] pid: %d\n[metric] command: %s\n[metric] status: %s\n",
+			metadata->pid, 
+			metadata->procname, 
+			metadata->state
+		);
+
+		// get io metrics
+		io_metrics *metrics = get_io_metrics(pid);
+		if (metrics->err != 0)
+		{
+			fprintf(stderr, "[failed][io] failed to get process io metrics.\n");
+			exit(1);
+		}
+
+		fprintf(stdout, 
+			"[metric] read_bytes: %llu\n[metric] write_bytes: %llu\n[metric] syscr: %llu\n[metric] syscw: %llu\n",
+			metrics->read_bytes,
+			metrics->write_bytes,
+			metrics->syscr,
+			metrics->syscw
+		);
+
+		// free resources
+		free(metadata);
+		free(metrics);
 
 		// wait 5 seconds
 		sleep(5);
