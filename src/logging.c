@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <time.h>
 
+// write a message into the stdout as log.
 void log_info(const char *fmt, ...)
 {
     va_list args;
@@ -17,6 +18,7 @@ void log_info(const char *fmt, ...)
     va_end(args);
 }
 
+// write a message into the stderr as log.
 void log_fatal(const char *fmt, ...)
 {
     va_list args;

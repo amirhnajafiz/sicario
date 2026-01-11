@@ -34,23 +34,26 @@ io_metrics *get_io_metrics(int pid)
             token = strtok(NULL, IO_DELIMETER);
 
             metrics->write_bytes = strtoul(token, NULL, 10);
-        } else if (has_prefix(buffer, "read_bytes"))
+        }
+        else if (has_prefix(buffer, "read_bytes"))
         {
             char *token = strtok(buffer, IO_DELIMETER);
             token = strtok(NULL, IO_DELIMETER);
-            
+
             metrics->read_bytes = strtoul(token, NULL, 10);
-        } else if (has_prefix(buffer, "syscr"))
+        }
+        else if (has_prefix(buffer, "syscr"))
         {
             char *token = strtok(buffer, IO_DELIMETER);
             token = strtok(NULL, IO_DELIMETER);
-            
+
             metrics->syscr = strtoul(token, NULL, 10);
-        } else if (has_prefix(buffer, "syscw"))
+        }
+        else if (has_prefix(buffer, "syscw"))
         {
             char *token = strtok(buffer, IO_DELIMETER);
             token = strtok(NULL, IO_DELIMETER);
-            
+
             metrics->syscw = strtoul(token, NULL, 10);
         }
     }

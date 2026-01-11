@@ -82,7 +82,7 @@ char *current_timestamp()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
 
-    strftime(buffer, 64, "%Y-%m-%d %H:%M:%S", timeinfo); 
-    
+    strftime(buffer, 64, "%Y-%m-%d %H:%M:%S", timeinfo);
+
     return buffer;
 }

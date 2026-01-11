@@ -42,7 +42,7 @@ bool proc_io_available(int pid)
         // free the resources
         free(path);
         fclose(file);
-        
+
         return true;
     }
 
@@ -56,10 +56,10 @@ bool proc_io_available(int pid)
 proc_metadata *get_proc_metadata(int pid)
 {
     // create a metadata instance
-    proc_metadata* metadata = (proc_metadata*)malloc(sizeof(proc_metadata));
+    proc_metadata *metadata = (proc_metadata *)malloc(sizeof(proc_metadata));
     metadata->pid = pid;
     metadata->procname = (char *)malloc(100 * sizeof(char));
-    metadata->state = (char *)malloc(4 *sizeof(char));
+    metadata->state = (char *)malloc(4 * sizeof(char));
     metadata->err = 0;
 
     // open the stat file

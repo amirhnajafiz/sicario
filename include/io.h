@@ -13,7 +13,6 @@ typedef struct
     unsigned long long syscw;
 } io_metrics;
 
-
 // refer to src/io.c
 io_metrics *get_io_metrics(int pid);
 

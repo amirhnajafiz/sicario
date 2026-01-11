@@ -54,10 +54,9 @@ int main(int argc, char **argv)
 
 		log_info(
 			"metadata\n\tpid: %d\n\tcommand: %s\n\tstatus: %s",
-			metadata->pid, 
-			metadata->procname, 
-			metadata->state
-		);
+			metadata->pid,
+			metadata->procname,
+			metadata->state);
 
 		// get io metrics
 		io_metrics *metrics = get_io_metrics(pid);
@@ -72,8 +71,7 @@ int main(int argc, char **argv)
 			metrics->read_bytes,
 			metrics->write_bytes,
 			metrics->syscr,
-			metrics->syscw
-		);
+			metrics->syscw);
 
 		// free resources
 		free(metadata);
