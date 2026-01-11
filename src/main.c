@@ -1,3 +1,4 @@
+#include "proc.h"
 #include "utils.h"
 
 #include <stdio.h>
@@ -18,10 +19,24 @@ int main(int argc, char **argv)
 
 	// convert the pid to int for validation check
 	int pid = pid_from_str(pid_str);
-	if (pid == -1)
+	if (pid < 1)
 	{
-		fprintf(stderr, "[failed][pid] pid must be a positive valid number or zero!\n");
+		fprintf(stderr, "[failed][pid] pid must be a positive valid number!\n");
 		exit(1);
+	}
+
+	// check if proc exists
+	if (!proc_exists(pid))
+	{
+		fprintf(stderr, "[failed][proc] pid does not exist or stopped!\n");
+		exit(0);
+	}
+
+	// check if IO is exported
+	if (!proc_io_available(pid))
+	{
+		fprintf(stderr, "[failed][io] io metrics are not exported for this process.");
+		exit(0);
 	}
 
 	return 0;

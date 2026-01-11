@@ -4,13 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-// pid validation checks if pid is a valid non-negative number.
+// pid validation checks if pid is a valid positive number.
 bool pid_validation(char *pid_str)
 {
     // copy the input
     char *ptr = pid_str;
 
-    while(*ptr != '\0')
+    while (*ptr != '\0')
     {
         bool flag = false;
         for (int i = 0; i < PID_VALIDATION_LEN; i++)
@@ -24,7 +24,7 @@ bool pid_validation(char *pid_str)
 
         if (!flag)
             return false;
-        
+
         ptr++;
     }
 
