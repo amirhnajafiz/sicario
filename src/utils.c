@@ -63,3 +63,9 @@ void ctrim_str(char *str)
         str[len - 1] = '\0';
     }
 }
+
+// has prefix checks if a string contains a substring.
+bool has_prefix(const char *str, const char *pre)
+{
+    return strncmp(pre, str, strlen(pre)) == 0;
+}

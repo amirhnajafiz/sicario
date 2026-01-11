@@ -16,8 +16,15 @@ bool proc_exists(int pid)
     FILE *file;
     if ((file = fopen(path, "r")) != NULL)
     {
+        // free the resources
+        free(path);
+        fclose(file);
+
         return true;
     }
+
+    // free the resources
+    free(path);
 
     return false;
 }
@@ -32,8 +39,15 @@ bool proc_io_available(int pid)
     FILE *file;
     if ((file = fopen(path, "r")) != NULL)
     {
+        // free the resources
+        free(path);
+        fclose(file);
+        
         return true;
     }
+
+    // free the resources
+    free(path);
 
     return false;
 }
@@ -76,6 +90,11 @@ proc_metadata *get_proc_metadata(int pid)
             break;
         }
     }
+
+    // free the resources
+    fclose(file);
+    free(token);
+    free(path);
 
     return metadata;
 }

@@ -1,6 +1,8 @@
 #ifndef INCLUDED_IO
 #define INCLUDED_IO
 
+#define IO_DELIMETER ": "
+
 // IO metrics holds the read/write metrics values.
 typedef struct
 {
